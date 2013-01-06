@@ -1,0 +1,17 @@
+{
+  "name": "dvdripper",
+  "version": "0.0.1",
+  "author": "Jonathan Diehl <jonathan.diehl@gmail.com>",
+  "description": "Automated DVD Ripper based on HandbrakeCLI",
+  "scripts": {
+    "start": "nodemon --debug -w lib/ app.js"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "request": ">= 2.0.0",
+    "tmdb": ">= 0.0.1",
+    "discident": ">= 0.0.1"
+  }
+}
