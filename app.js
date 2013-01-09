@@ -14,5 +14,12 @@ function run(volume) {
 }
 
 // initialize the watcher
-var watcher = new Watcher(config.source, true);
-watcher.on("change", run);
+// var watcher = new Watcher(config.source, true);
+// watcher.on("change", run);
+
+fs.readdir(config.source, function (err, files) {
+	files.forEach(function (file) {
+		if (file[0] === "." || config.source_ignore.indexOf(file) >= 0) return;
+		run(path.join(config.source, file));
+	});
+});
