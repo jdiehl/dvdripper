@@ -1,71 +1,18 @@
-var Watcher = require("./lib/Watcher");
-var identifier = require("./lib/identifier");
-var ripper = require("./lib/ripper");
-
-var config = require("./config");
 var fs = require("fs");
 var path = require("path");
+var chainsaw = require("chainsaw");
+var child_process = require("child_process");
 
-// var watcher = new Watcher(config.source);
-// watcher.on("change", function (volume) {
-// 	console.log(volume);
-// });
+var Watcher = require("./lib/Watcher");
+var Ripper = require("./lib/Ripper");
 
-function cacheFilename(m) {
-	return path.join(config.cache, path.basename(m.input) + ".json");
+var config = require("./config");
+
+function run(volume) {
+	var ripper = new Ripper(volume);
+	ripper.run();
 }
 
-function loadCache(m, callback) {
-	if (!config.cache) {
-		callback(false);
-		return;
-	}
-	fs.readFile(cacheFilename(m), function (error, data) {
-		if (!data) {
-			callback(false);
-		} else {
-			m = JSON.parse(data);
-			callback(true);
-		}
-	});
-}
-
-function saveCache(m, callback) {
-	if (config.cache) {
-		var data = JSON.stringify(m, null, "\t");
-		fs.writeFile(cacheFilename(m), data, function (error) {
-			if (error) {
-				console.error("Could not write cache:", error);
-			}
-			if (callback) callback(m);
-		});
-	}
-}
-
-function identify(m, callback) {
-	identifier(m)
-	.queryVolume()
-	.queryDiscident()
-	.queryTMDB()
-	.queryTMDBDetails()
-	.do(callback);
-}
-
-function rip(m, callback) {
-	ripper(m)
-	.scan()
-	.rip()
-	.do(callback);
-}
-
-var m = { input: "/Volumes/FROM_DUSK_TILL_DAWN"};
-loadCache(m, function (success) {
-	if (success) {
-		rip(m);
-	} else {
-		identify(m, function (m) {
-			saveCache(m);
-			rip(m);
-		});
-	}
-});
+// initialize the watcher
+var watcher = new Watcher(config.source, true);
+watcher.on("change", run);
