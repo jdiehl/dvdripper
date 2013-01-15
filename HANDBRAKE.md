@@ -1,4 +1,3 @@
-jon@Jonathan:~/Desktop HandBrakeCLI --help
 Syntax: HandBrakeCLI [options] -i <device> -o <file>
 
 ### General Handbrake Options------------------------------------------------
@@ -257,4 +256,3 @@ Syntax: HandBrakeCLI [options] -i <device> -o <file>
                             If "number" is omitted, the first srt is default.
                             "number" is an 1 based index into the srt-file list
 
-jon@Jonathan:~/Desktop 

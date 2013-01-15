@@ -1,11 +1,12 @@
 {
 	"source": "/Volumes",
 	"source_ignore": ["Backup", "Macintosh HD", "MobileBackups"],
-	"destination": "/Users/jon/Movies",
+	"destination": "/Users/jon/Movies/Movies",
 	"cache": "cache",
 	"handbrake": "/usr/local/bin/HandBrakeCLI",
 	"atomicparsley": "/usr/local/bin/AtomicParsley",
 	"caffeinate": "/usr/bin/caffeinate",
 	"eject": "/usr/sbin/diskutil eject",
+	"mount": "/usr/sbin/diskutil mount",
 	"tmdb_key": "4b9f20c1f494e22f626ab78b97321d13"
 }
