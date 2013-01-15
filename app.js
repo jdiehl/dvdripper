@@ -14,25 +14,71 @@ function _caffeinate() {
 	return child.kill.bind(child);
 }
 
+function _iTunes(file, callback) {
+	var cmd = "osascript << APPLESCRIPT\n" +
+		"tell application \"iTunes\" to add POSIX file \"" + file + "\"\n" +
+		"APPLESCRIPT";
+	child_process.exec(cmd, callback);
+}
+
+var RE_MOUNT = /^\/dev\/disk2 on (\S+)/;
+function _getDVDPath(callback) {
+	child_process.exec("mount", function (error, stdout, stderr) {
+		var input;
+		stdout.split("\n").forEach(function (line) {
+			var match = line.match(RE_MOUNT);
+			if (match) {
+				input = match[1];
+				return false;
+			}
+		});
+		if (input) {
+			callback(input);
+		} else {
+			child_process.exec("sleep 1", function () {
+				_getDVDPath(callback);
+			});
+		}
+	});
+}
+
 function run(volume) {
 	var resume = _caffeinate();
 	var ripper = new Ripper(volume);
 	ripper.run(function () {
-		child_process.exec("open -a \"iTunes\" \"" + ripper.output + "\"");
+
+		// add to itunes
+		_iTunes(ripper.output);
+
+		// send notification
 		notify.notify("DVDRipper", "Your movie (" + ripper.info.title + ") is ready!");
-		console.log("DONE");
-		process.sleep(1);
-		resume();
+
+		// inform that user that we are done
+		console.log("DONE RIPPING.");
+		console.log(ripper.toString());
+
+		// sleep 1 minute, then resume
+		child_process.exec("sleep 60", resume);
 	});
 }
 
+/*
 // initialize the watcher
-// var watcher = new Watcher(config.source, true);
-// watcher.on("change", run);
+var watcher = new Watcher(config.source, true);
+watcher.on("change", run);
+*/
 
+/*
+// load dvds
 fs.readdir(config.source, function (err, files) {
 	files.forEach(function (file) {
 		if (file[0] === "." || config.source_ignore.indexOf(file) >= 0) return;
 		run(path.join(config.source, file));
 	});
+});
+*/
+
+// wait for dvd mount
+_getDVDPath(function (input) {
+	run(input);
 });
