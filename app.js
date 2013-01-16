@@ -54,7 +54,7 @@ function run(volume) {
 		}
 
 		// open iVI if metadata is missing
-		if (!ripper.description) {
+		if (!ripper.info.description) {
 			child_process.exec("open -a \"iVI Pro\" \"" + ripper.output + "\"");
 		}
 
