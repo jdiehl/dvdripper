@@ -21,7 +21,7 @@ function _iTunes(file, callback) {
 	child_process.exec(cmd, callback);
 }
 
-var RE_MOUNT = /^\/dev\/disk2 on (\S+)/;
+var RE_MOUNT = /^\/dev\/disk2 on (.+) \(/;
 function _getDVDPath(callback) {
 	child_process.exec("mount", function (error, stdout, stderr) {
 		var input;
@@ -46,6 +46,17 @@ function run(volume) {
 	var resume = _caffeinate();
 	var ripper = new Ripper(volume);
 	ripper.run(function () {
+
+		// stop
+		if (!ripper.output) {
+			resume();
+			return;
+		}
+
+		// open iVI if metadata is missing
+		if (!ripper.description) {
+			child_process.exec("open -a \"iVI Pro\" \"" + ripper.output + "\"");
+		}
 
 		// add to itunes
 		_iTunes(ripper.output);
