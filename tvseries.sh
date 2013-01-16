@@ -19,7 +19,7 @@ function encode {
 }
 
 function getDVDPath {
-	input=`mount | grep /dev/disk2 | cut -f3 -d" "`
+	input=`mount | egrep -e /dev/disk[12] | cut -f3 -d" "`
 }
 
 getDVDPath
@@ -44,4 +44,4 @@ done
 
 # eject disk
 sleep 1
-diskutil eject /dev/disk2
+diskutil eject /dev/disk1
