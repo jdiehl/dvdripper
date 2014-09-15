@@ -1,7 +1,10 @@
 {
   "name": "dvdripper",
   "version": "0.0.1",
-  "author": "Jonathan Diehl <jonathan.diehl@gmail.com>",
+  "author": {
+    "name": "Jonathan diehl",
+    "url": "https://github.com/jdiehl"
+  },
   "description": "Automated DVD Ripper based on HandbrakeCLI",
   "scripts": {
     "start": "nodemon --debug -w lib/ app.js"
