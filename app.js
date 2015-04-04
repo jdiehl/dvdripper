@@ -21,7 +21,7 @@ function _iTunes(file, callback) {
 	child_process.exec(cmd, callback);
 }
 
-var RE_MOUNT = /^\/dev\/disk[12] on (.+) \(/;
+var RE_MOUNT = /^\/dev\/disk[34] on (.+) \(/;
 function _getDVDPath(callback) {
 	child_process.exec("mount", function (error, stdout, stderr) {
 		var input;

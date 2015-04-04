@@ -1,7 +1,7 @@
 {
 	"source": "/Volumes",
 	"source_ignore": ["Backup", "Macintosh HD", "MobileBackups"],
-	"destination": "/Users/jon/Movies/Movies",
+	"destination": "/Users/jdiehl/Movies/Movies",
 	"cache": "cache",
 	"handbrake": "/usr/local/bin/HandBrakeCLI",
 	"atomicparsley": "/usr/local/bin/AtomicParsley",
