@@ -15,7 +15,7 @@
   "dependencies": {
     "apn": "^2.2.0",
     "chainsaw": "^0.1.0",
-    "discident": "0.0.1",
+    "discident": "^0.0.2",
     "plist": "^2.1.0",
     "request": "^2.83.0",
     "tmdbv3": "^0.1.2"
